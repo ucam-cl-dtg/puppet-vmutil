@@ -1,0 +1,126 @@
+### Configuration for vmutil
+#
+# Install in /etc/vmutil.conf
+#
+# This is a shell fragment; bash syntax is allowed
+#
+
+
+# Authentication credentials for XenServer
+#
+# Password file must have exactly two lines: the first a username, the second a password
+#
+PASSWORD_FILE="/etc/vmutil.password"
+
+
+# Hosts to try connecting to
+#
+# No need to list every host in the pool; each of these will be queried in turn
+# to determine the pool master.  Make sure at least one of these is up at all times.
+# Try to put a host that is highly likely to be up at the top of the list, otherwise
+# you'll have to wait for a timeout.
+#
+# It's OK to use a DNS round-robin address here which points to a selection of hosts
+# which are all likely to be up.
+#
+# Note that the dom0 SSL certificate must validate against the hostname listed here;
+# you probably need to replace your dom0s' /etc/xensource/xapi-ssl.pem if you are
+# still using the initially-installed self-signed certificate.
+#
+HOSTS="<%= @hosts %>"
+
+
+# Set of VMs that a user should have control over
+#
+# This is an argument to 'xe'.  You may use environment variables, in particular $USER,
+# but you should use SINGLE QUOTES here to ensure that expansion doesn't happen too
+# soon.
+#
+# If you use XVP with the GROUPTAG option, you probably want to use something like:
+#    USER_VMS='tags="xvp: $USER"'
+# to allow a user to only control VMs tagged with "xvp: " followed by their username
+# (with no other tags).
+#
+# The default is to allow a user to control ALL VMs!
+#
+#USER_VMs=""
+
+
+# Optional title for branding
+#
+# (For the screen background and the initial 'Conencting' message)
+#
+#BRANDING="XenServer"
+
+
+# Path to 'xe' binary
+#
+# (Not distributed with vmutil; copy it out of /opt/xensource/bin/xe on one of your dom0s)
+#
+# If unset, vmutil will try $PATH.
+#
+#XE="xe"
+
+
+# Path to 'xe-where-is-my-master' script
+#
+# (Distributed with vmutil)
+#
+# If unset, vmutil will try $PATH.
+#
+#XE_WHERE_IS_MY_MASTER="xe-where-is-my-master"
+
+
+# Elevate privileges with sudo?
+#
+# Because vmutil needs to read $PASSWORD_FILE, you may have it try to elevate privileges
+# on startup.  (This is especially useful if the user running vmutil has filesystem access
+# and privileges to run a limited set of commands as root.)
+#
+# Unset this variable if this feature is not needed.
+#
+# NB: this has to be sudo, as vmutil uses $SUDO_USER to determine whether it has already
+# elevated privileges and to determine the original invoking user -- but you can customise
+# the sudo arguments (in particular to specify the absolute path to vmutil).
+#
+#SUDO="sudo vmutil"
+
+
+# Allow sftp/scp/rsync when used as a shell?
+#
+# You may set vmutil to be a user's shell; if you do, should the user also be allowed
+# to use sftp/scp/rsync?  (set to 1 for true, or leave it unset for false)
+#
+#ALLOW_SFTP=
+
+
+# sftp server(s) that the user should be allowed to execute
+#
+# Note that no sanity-checking is performed on these servers; they're just executed
+# if the user or sshd asks.  Be careful that you're not allowing the user more privileges
+# than you intended.
+#
+# If you want to set this to something unusual, you may also need to configure sshd
+# appropriately (e.g. "Subsystem sftp /some/path")
+#
+# NB: rsync and scp are not subject to this restriction and use the first rsync or scp
+# present in $PATH.
+#
+#VALID_SFTP_SERVERS="
+#	/usr/local/lib/sftp-server
+#	/usr/lib/sftp-server
+#	/usr/lib/openssh/sftp-server
+#"
+
+
+# Debug mode
+#
+# Set to 1 to avoid clearing the screen on exit, so that you can read error messages
+# from the shell.  (Usually the screen is cleared because dialog leaves mess behind.)
+#
+# Leave this unset unless you are debugging.
+#
+#DEBUG=
+
+
+# vim: syntax=sh
