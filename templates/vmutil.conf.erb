@@ -43,7 +43,7 @@ HOSTS="<%= @hosts %>"
 #
 # The default is to allow a user to control ALL VMs!
 #
-#USER_VMs=""
+USER_VMS='<%= @user_vms %>'
 
 
 # Optional title for branding
@@ -83,7 +83,7 @@ HOSTS="<%= @hosts %>"
 # elevated privileges and to determine the original invoking user -- but you can customise
 # the sudo arguments (in particular to specify the absolute path to vmutil).
 #
-#SUDO="sudo vmutil"
+SUDO="<%= @sudo %>"
 
 
 # Allow sftp/scp/rsync when used as a shell?
