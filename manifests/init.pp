@@ -2,8 +2,8 @@ class vmutil (
   $hosts,
   $xe_path,
   $user_vms,
-  $password_file = "/etc/vmutil-password",
-  $sudo = "sudo vmutil",
+  $password_file = '/etc/vmutil-password',
+  $sudo = 'sudo vmutil',
 ) {
 
   $packagelist = ['mercurial', 'dialog']
@@ -51,7 +51,7 @@ class vmutil (
 
 
   file { '/etc/vmutil.conf':
-    content => template("vmutil/vmutil.conf.erb")
+    content => template('vmutil/vmutil.conf.erb')
   }
 
   sudoers::allowed_command{ 'ALL':
@@ -59,7 +59,7 @@ class vmutil (
       user             => 'ALL',
       run_as           => 'root',
       require_password => false,
-      comment          => "Allow anyone to run vmutil",
+      comment          => 'Allow anyone to run vmutil',
   }
 
 
