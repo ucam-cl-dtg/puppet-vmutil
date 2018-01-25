@@ -6,7 +6,7 @@ class vmutil (
   $sudo = 'sudo vmutil',
 ) {
 
-  $packagelist = ['mercurial', 'dialog']
+  $packagelist = ['mercurial', 'dialog', 'stunnel4']
 
   package {
     $packagelist:
